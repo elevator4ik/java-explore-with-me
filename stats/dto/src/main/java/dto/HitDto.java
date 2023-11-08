@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class HitDto {
     @NotNull(message = "timestamp is null")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")

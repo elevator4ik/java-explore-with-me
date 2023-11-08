@@ -1,11 +1,12 @@
-package ru.practikum.explore;
+package ru.practicum.evm;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Main {
+public class MainServiceApplication {
+
     public static void main(String[] args) {
-        SpringApplication.run(Main.class, args);
+        SpringApplication.run(MainServiceApplication.class, args);
     }
 }
