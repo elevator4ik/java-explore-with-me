@@ -26,11 +26,11 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getUsers(List<Long> ids, int from, int size) {
-        PageRequest pageRequest = PageRequest.of(from/size, size);
+        PageRequest pageRequest = PageRequest.of(from / size, size);
         return repository.findByIdIn(ids, pageRequest).stream().collect(Collectors.toList());
     }
 
-//TODO*
+
     @Override
     public UserDto createUser(NewUserRequest newUserRequest) {
         User user = mapper.toUser(newUserRequest);
@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUserById(Long userId) {
-        if(!repository.existsById(userId)) {
+        if (!repository.existsById(userId)) {
             log.warn("User with id={} was not found!", userId);
             throw new ObjectNotFoundException("User", "Not found");
         }

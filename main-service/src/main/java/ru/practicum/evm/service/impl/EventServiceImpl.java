@@ -261,7 +261,7 @@ public class EventServiceImpl implements EventService {
         if (events.size() < size) {
             size = events.size();
         }
-        return eventMapper.toListOfEventFullDto(events.subList(from, from/size));
+        return eventMapper.toListOfEventFullDto(events.subList(from, from / size));
     }
 
     @Override
