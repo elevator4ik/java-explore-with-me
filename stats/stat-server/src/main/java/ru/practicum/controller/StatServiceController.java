@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.HitDto;
 import ru.practicum.dto.RequestStatDto;
 import ru.practicum.dto.Validator;
+import ru.practicum.exception.BadRequestException;
 import ru.practicum.service.StatService;
 
 import java.time.LocalDateTime;
@@ -34,7 +35,11 @@ public class StatServiceController {
                                                                 @RequestParam(defaultValue = "") List<String> uris,
                                                                 @RequestParam(defaultValue = "false") boolean unique) {
         log.info("Calling the GET request to /stats endpoint");
-        return new ResponseEntity<>(statService.getAllStatistics(start, end, uris, unique), HttpStatus.OK);
+        if (start != null && end!= null && end.isBefore(start)) {
+            throw new BadRequestException("Start is after end");
+        } else {
+            return new ResponseEntity<>(statService.getAllStatistics(start, end, uris, unique), HttpStatus.OK);
+        }
     }
 
     @PostMapping("/hit")
