@@ -140,12 +140,12 @@ public class EventMapper {
                 .collect(Collectors.toList());
     }
 
-    public static EventShortDto toEventShortDto(Event event) { //добавил
+    public static EventShortDto toEventShortDtos(Event event) { //добавил
         return EventShortDto.builder()
                 .annotation(event.getAnnotation())
                 .category(CategoryMapper.toCategoryDto(event.getCategory()))
                 .confirmedRequests(event.getConfirmedRequests())
-                .eventDate(event.getEventDate().toString())
+                .eventDate(event.getEventDate().format(FORMATTER))
                 .id(event.getId())
                 .initiator(UserMapper.toUserShortDto(event.getInitiator()))
                 .paid(event.getPaid())

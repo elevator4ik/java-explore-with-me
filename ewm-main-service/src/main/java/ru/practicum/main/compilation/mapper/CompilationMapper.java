@@ -26,7 +26,7 @@ public class CompilationMapper {
 
     public static CompilationDto toCompilationDto(Compilation compilation) {
         List<EventShortDto> eventShortDtoList = compilation.getEvents().stream()
-                .map(EventMapper::toEventShortDto)
+                .map(EventMapper::toEventShortDtos)
                 .collect(Collectors.toList());
 
         return CompilationDto.builder()

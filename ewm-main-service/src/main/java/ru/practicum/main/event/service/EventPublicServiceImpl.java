@@ -17,6 +17,7 @@ import ru.practicum.main.stat.Setter;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static ru.practicum.main.util.Util.createPageRequestDesc;
@@ -35,18 +36,23 @@ public class EventPublicServiceImpl implements EventPublicService {
                                                 LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Integer from,
                                                 Integer size, HttpServletRequest request) {
         log.info("readPublicEvents - invoked");
-        sort = (sort != null && sort.equals("EVENT_DATE")) ? "eventDate" : "id";
+        sort = (sort != null && sort.equals("EVENT_DATE")) ? "eventDate" : "id"; //вот тут выбор между датой и, если
+        // дата не указана, то "дефолт" id
 
         List<Event> list = repository.findAllEvents(text, categories, paid, rangeStart, rangeEnd,
                 onlyAvailable, sort, createPageRequestDesc(sort, from, size));
 
+        if (sort.equals("id")){ //сортировка по просмотрам
+            list.sort(Comparator.comparingLong(Event::getView));
+        }
+
         setter.setViewAndRequestsAndAddHit(list, request);
 
-        List<EventDto> events = new ArrayList<>();
-        list.forEach(event -> events.add(EventMapper.toEventShort(event)));
+        List<EventShortDto> events = new ArrayList<>();
+        list.forEach(event -> events.add(EventMapper.toEventShortDtos(event)));
 
         log.info("Result: list event size = {}", events.size());
-        return EventMapper.toListEventShortDto(events);
+        return events;
     }
 
     @Override
