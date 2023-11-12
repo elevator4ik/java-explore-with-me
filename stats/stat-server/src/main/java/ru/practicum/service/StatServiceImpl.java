@@ -29,7 +29,7 @@ public class StatServiceImpl implements StatService {
 
     @Override
     public List<RequestStatDto> getAllStatistics(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
-        if (uris.isEmpty()){
+        if (uris.isEmpty()) {
             uris = null;
         }
         if (unique) {
