@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.main.event.dto.EventDto;
 import ru.practicum.main.event.dto.EventFullDto;
 import ru.practicum.main.event.dto.EventShortDto;
 import ru.practicum.main.event.mapper.EventMapper;
@@ -42,7 +41,7 @@ public class EventPublicServiceImpl implements EventPublicService {
         List<Event> list = repository.findAllEvents(text, categories, paid, rangeStart, rangeEnd,
                 onlyAvailable, sort, createPageRequestDesc(sort, from, size));
 
-        if (sort.equals("id")){ //сортировка по просмотрам
+        if (sort.equals("id")) { //сортировка по просмотрам
             list.sort(Comparator.comparingLong(Event::getView));
         }
 

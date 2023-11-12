@@ -55,7 +55,7 @@ public class RequestServiceImpl implements RequestService {
             throw new ConflictException("The initiator of the event cannot send a request for participation");
         }
 
-        if(event.getState() != State.PUBLISHED) {
+        if (event.getState() != State.PUBLISHED) {
             log.error("Event state = {} - it should be PUBLISHED", event.getState());
             throw new ConflictException("The event must be published in order to participate");
         }
