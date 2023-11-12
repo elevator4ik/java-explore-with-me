@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.HitDto;
 import ru.practicum.dto.RequestStatDto;
-import ru.practicum.exception.BadRequestException;
 import ru.practicum.model.mapper.StatServMapper;
 import ru.practicum.repository.StatServiceRepository;
 
@@ -29,24 +28,23 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public List<RequestStatDto> getAllStatistics(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
+    public List<RequestStatDto> getAllStatistics(
+            LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
+
         if (uris.isEmpty()) {
             uris = null;
         }
-        if (start.isBefore(end)) {
-            if (unique) {
-                return statRepository.getAllStatistic(start, end, uris)
-                        .stream()
-                        .map(statMapper::toRequestStatDto)
-                        .collect(Collectors.toList());
-            } else {
-                return statRepository.getAllStatisticNonUnique(start, end, uris)
-                        .stream()
-                        .map(statMapper::toRequestStatDto)
-                        .collect(Collectors.toList());
-            }
+
+        if (unique) {
+            return statRepository.getAllStatistic(start, end, uris)
+                    .stream()
+                    .map(statMapper::toRequestStatDto)
+                    .collect(Collectors.toList());
         } else {
-            throw new BadRequestException("End before Start");
+            return statRepository.getAllStatisticNonUnique(start, end, uris)
+                    .stream()
+                    .map(statMapper::toRequestStatDto)
+                    .collect(Collectors.toList());
         }
     }
 }
