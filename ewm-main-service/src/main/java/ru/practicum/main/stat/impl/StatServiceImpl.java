@@ -48,8 +48,8 @@ public class StatServiceImpl implements StatService {
         List<ConfirmedRequestShortDto> confirmedRequestShortDtoList =
                 requestMainServiceRepository.countByEventId(listEventId);
         Map<Long, Long> confirmedRequest = confirmedRequestShortDtoList.stream()
-                .collect(Collectors.
-                        toMap(ConfirmedRequestShortDto::getEventId, ConfirmedRequestShortDto::getConfirmedRequestsCount));
+                .collect(Collectors.toMap(ConfirmedRequestShortDto::getEventId,
+                        ConfirmedRequestShortDto::getConfirmedRequestsCount));
         log.info("Result: map of confirmed request size = {}", confirmedRequest.size());
         return confirmedRequest;
     }

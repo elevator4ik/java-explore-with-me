@@ -22,6 +22,7 @@ public class Setter {
             event.setView(view.getOrDefault(event.getId(), 0L));
         }
     }
+
     public int toConfirmedRequest(Event event) {
         return statService.toConfirmedRequest(List.of(event)).values().size();
     }

@@ -99,21 +99,7 @@ public class EventMapper {
                 LocationMapper.toLocation(adminEvent.getLocation()));
         return event;
     }
-/*
-    public EventDto toEventShort(Event event, Long view, Long confirmedRequests) {
-        return EventDto.builder()
-                .id(event.getId())
-                .eventDate(event.getEventDate())
-                .confirmedRequests(confirmedRequests)
-                .views(view)
-                .annotation(event.getAnnotation())
-                .category(event.getCategory())
-                .initiator(event.getInitiator())
-                .paid(event.getPaid())
-                .title(event.getTitle())
-                .build();
-    }
-*/
+
     public EventShortDto toEventShortDto(EventDto eventDto) {
         return EventShortDto.builder()
                 .initiator(UserMapper.toUserShortDto(eventDto.getInitiator()))

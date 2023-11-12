@@ -47,18 +47,6 @@ public class EventPublicServiceImpl implements EventPublicService {
 
         log.info("Result: list event size = {}", events.size());
         return EventMapper.toListEventShortDto(events);
-/*
-        Map<Long, Long> confirmedRequest = statService.toConfirmedRequest(list);
-        Map<Long, Long> view = statService.toView(list);
-
-        List<EventDto> events = new ArrayList<>();
-
-        list.forEach(event -> events.add(EventMapper.toEventShort(event, view.getOrDefault(event.getId(), 0L),
-                confirmedRequest.getOrDefault(event.getId(), 0L))));
-
-        statService.addHits(request);
-        log.info("Result: list event size = {}", events.size());
-        return EventMapper.toListEventShortDto(events);*/
     }
 
     @Override

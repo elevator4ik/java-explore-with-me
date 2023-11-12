@@ -27,6 +27,7 @@ public class Compilation {
             joinColumns = @JoinColumn(name = "compilations_id"),
             inverseJoinColumns = @JoinColumn(name = "events_id"))
     private Set<Event> events;
+
     @Override
     public String toString() {
         return "Compilations{" +
