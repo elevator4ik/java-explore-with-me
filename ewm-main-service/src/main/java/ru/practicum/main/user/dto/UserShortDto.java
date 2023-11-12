@@ -2,7 +2,7 @@ package ru.practicum.main.user.dto;
 
 import lombok.*;
 
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 @Builder
@@ -13,6 +13,6 @@ import javax.validation.constraints.NotNull;
 public class UserShortDto {
     @NotNull
     private Long id;
-    @NotEmpty
+    @NotBlank
     private String name;
 }

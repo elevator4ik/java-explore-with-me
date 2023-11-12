@@ -12,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class RequestUpdateDto {
-    private List<Request> conformedRequest = new ArrayList<>();
+    private List<Request> confirmedRequest = new ArrayList<>();
     private List<Request> cancelRequest = new ArrayList<>();
 }

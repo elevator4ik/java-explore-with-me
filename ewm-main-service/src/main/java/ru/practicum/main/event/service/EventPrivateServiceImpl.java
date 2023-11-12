@@ -23,8 +23,8 @@ import ru.practicum.main.request.dto.RequestUpdateDto;
 import ru.practicum.main.request.mapper.RequestMapper;
 import ru.practicum.main.request.model.Request;
 import ru.practicum.main.request.repository.RequestMainServiceRepository;
-import ru.practicum.main.user.repository.UserMainServiceRepository;
 import ru.practicum.main.stat.Setter;
+import ru.practicum.main.user.repository.UserMainServiceRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -205,42 +205,47 @@ public class EventPrivateServiceImpl implements EventPrivateService {
             throw new ConflictException("You are not the initiator of the event");
         }
 
-        int confirmedRequest = setter.toConfirmedRequest(event);
+        int confirmedRequest = setter.toConfirmedRequest(event); //количество подтвержденных реквестов
 
-        if (event.getParticipantLimit() != 0 && confirmedRequest >= event.getParticipantLimit()) {
+        if (event.getParticipantLimit() != 0 && confirmedRequest >= event.getParticipantLimit()) { //проверка
             log.error("The list of participants is full");
             throw new ConflictException("The list of participants is full, you cannot sign up");
         }
 
         RequestUpdateDto updateRequest = new RequestUpdateDto();
 
-        requestShort.getRequestIds().forEach(requestId -> {
+        List<Long> requestIds = requestShort.getRequestIds();
+
+        for (Long requestId : requestIds) {
             Request request = requestMainServiceRepository.findById(requestId)
                     .orElseThrow(() -> {
                         log.error("Request with id = {} not exist", requestId);
                         return new NotFoundException("Request not found");
                     });
-
+            if (confirmedRequest >= event.getParticipantLimit()) { //проверка на достижение лимита во время перебора
+                requestShort.setStatus(Status.REJECTED);
+            }
             if (requestShort.getStatus().equals(Status.CONFIRMED)) {
                 request.setStatus(Status.CONFIRMED);
-                updateRequest.getConformedRequest().add(request);
+                updateRequest.getConfirmedRequest().add(request);
+                confirmedRequest++;
             }
             if (requestShort.getStatus().equals(Status.REJECTED)) {
                 request.setStatus(Status.REJECTED);
                 updateRequest.getCancelRequest().add(request);
             }
-        });
+        }
         log.info("Result: request {} - updated", updateRequest);
         return RequestMapper.toRequestShortUpdateDto(updateRequest);
     }
 
     private Optional<Location> getLocation(Location location) {
-        log.info("getLocation - invoked");
+        log.trace("getLocation {} - invoked", location);
         return locationMainServiceRepository.findByLatAndLon(location.getLat(), location.getLon());
     }
 
     private Location saveLocation(Location location) {
-        log.info("saveLocation - invoked");
+        log.trace("saveLocation {} - invoked", location);
         return locationMainServiceRepository.save(location);
     }
 }

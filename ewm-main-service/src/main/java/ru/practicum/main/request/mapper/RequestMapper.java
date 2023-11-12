@@ -39,7 +39,7 @@ public class RequestMapper {
     public RequestShortUpdateDto toRequestShortUpdateDto(RequestUpdateDto requestShort) {
         return RequestShortUpdateDto.builder()
                 .rejectedRequests(RequestMapper.toListRequestDto(requestShort.getCancelRequest()))
-                .confirmedRequests(RequestMapper.toListRequestDto(requestShort.getConformedRequest()))
+                .confirmedRequests(RequestMapper.toListRequestDto(requestShort.getConfirmedRequest()))
                 .build();
     }
 
