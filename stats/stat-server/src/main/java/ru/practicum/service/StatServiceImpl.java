@@ -10,7 +10,6 @@ import ru.practicum.exception.BadRequestException;
 import ru.practicum.model.mapper.StatServMapper;
 import ru.practicum.repository.StatServiceRepository;
 
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -46,7 +45,7 @@ public class StatServiceImpl implements StatService {
                         .map(statMapper::toRequestStatDto)
                         .collect(Collectors.toList());
             }
-        }else{
+        } else {
             throw new BadRequestException("End before Start");
         }
     }
