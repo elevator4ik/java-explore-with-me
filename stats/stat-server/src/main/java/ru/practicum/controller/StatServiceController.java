@@ -35,7 +35,7 @@ public class StatServiceController {
                                                                 @RequestParam(defaultValue = "") List<String> uris,
                                                                 @RequestParam(defaultValue = "false") boolean unique) {
         log.info("Calling the GET request to /stats endpoint");
-        if (start != null && end!= null && end.isBefore(start)) {
+        if (start != null && end != null && end.isBefore(start)) {
             throw new BadRequestException("Start is after end");
         } else {
             return new ResponseEntity<>(statService.getAllStatistics(start, end, uris, unique), HttpStatus.OK);
