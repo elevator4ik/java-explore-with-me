@@ -24,7 +24,8 @@ public class PrivateCommentController {
                                              @PathVariable Long eventId,
                                              @RequestBody
                                              @Validated CommentCreateDto commentCreateDto) {
-        log.info("Calling the GET request to /users/{userId}/events/{eventId}/comment endpoint");
+        log.info("Calling the GET request to /users/{userId}/events/{eventId}/comment endpoint, with userId {}, eventId {}",
+                userId, eventId);
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(service.createComment(userId, eventId, commentCreateDto));
@@ -34,7 +35,8 @@ public class PrivateCommentController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> delete(@PathVariable Long userId,
                                          @PathVariable Long comId) {
-        log.info("Calling the GET request to /users/{userId}/comment/{comId} endpoint");
+        log.info("Calling the GET request to /users/{userId}/comment/{comId} endpoint, with userId {}, comId {}",
+                userId, comId);
         service.deleteComment(userId, comId);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)
@@ -46,7 +48,8 @@ public class PrivateCommentController {
                                             @PathVariable Long comId,
                                             @RequestBody
                                             @Validated CommentCreateDto commentCreateDto) {
-        log.info("Calling the PATCH request to users/{userId}/comment/{comId} endpoint");
+        log.info("Calling the PATCH request to users/{userId}/comment/{comId} endpoint, with userId {}, comId {}",
+                userId, comId);
         return ResponseEntity.ok(service.patchComment(userId, comId, commentCreateDto));
     }
 }

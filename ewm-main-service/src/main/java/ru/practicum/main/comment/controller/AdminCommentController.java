@@ -26,14 +26,14 @@ public class AdminCommentController {
 
     @GetMapping("users/{userId}/comment")
     public ResponseEntity<List<CommentDto>> get(@PathVariable Long userId) {
-        log.info("Calling the GET request to admin/users/{userId}/comment endpoint");
+        log.info("Calling the GET request to admin/users/{userId}/comment endpoint, with userId {}", userId);
         return ResponseEntity.ok(adminCommentService.findAllById(userId));
     }
 
     @DeleteMapping("comment/{comId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<String> delete(@PathVariable Long comId) {
-        log.info("Calling the GET request to admin/comment/{comId} endpoint");
+        log.info("Calling the GET request to admin/comment/{comId} endpoint, with comId {}", comId);
         adminCommentService.delete(comId);
         return ResponseEntity
                 .status(HttpStatus.NO_CONTENT)

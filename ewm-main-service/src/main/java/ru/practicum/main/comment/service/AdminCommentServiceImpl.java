@@ -3,6 +3,7 @@ package ru.practicum.main.comment.service;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.main.comment.dto.CommentDto;
 import ru.practicum.main.comment.mapper.CommentMapper;
 import ru.practicum.main.comment.model.Comment;
@@ -15,11 +16,13 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class AdminCommentServiceImpl implements AdminCommentService {
 
     private final CommentMainServiceRepository repository;
     private final UserMainServiceRepository userMainServiceRepository;
 
+    @Transactional
     @Override
     public void delete(Long comId) {
         log.info("admin delete - invoked");
