@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.practicum.main.comment.service.PrivateCommentService;
 import ru.practicum.main.event.dto.EventFullDto;
 import ru.practicum.main.event.dto.EventShortDto;
 import ru.practicum.main.event.mapper.EventMapper;
@@ -18,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import static ru.practicum.main.util.Util.createPageRequestDesc;
 
@@ -28,11 +30,13 @@ import static ru.practicum.main.util.Util.createPageRequestDesc;
 public class EventPublicServiceImpl implements EventPublicService {
 
     private final EventMainServiceRepository repository;
+    private final PrivateCommentService privateCommentService;
     private final Setter setter;
 
     @Override
-    public List<EventShortDto> readPublicEvents(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
-                                                LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Integer from,
+    public List<EventShortDto> readPublicEvents(String text, List<Long> categories, Boolean paid,
+                                                LocalDateTime rangeStart, LocalDateTime rangeEnd,
+                                                Boolean onlyAvailable, String sort, Integer from,
                                                 Integer size, HttpServletRequest request) {
         log.info("readPublicEvents - invoked");
         sort = (sort != null && sort.equals("EVENT_DATE")) ? "eventDate" : "id"; //вот тут выбор между датой и, если
@@ -47,8 +51,10 @@ public class EventPublicServiceImpl implements EventPublicService {
 
         setter.setViewAndRequestsAndAddHit(list, request);
 
+        Map<Long, Long> commentCount = privateCommentService.getCommentCount(list);
         List<EventShortDto> events = new ArrayList<>();
-        list.forEach(event -> events.add(EventMapper.toEventShortDtos(event)));
+        list.forEach(event ->
+                events.add(EventMapper.toEventShortDto(event, commentCount.getOrDefault(event.getId(), 0L))));
 
         log.info("Result: list event size = {}", events.size());
         return events;

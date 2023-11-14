@@ -17,5 +17,8 @@ public class Util {
         return PageRequest.of(from / size, size, Sort.by(sortBy).descending());
     }
 
+    public static PageRequest createPageRequestAsc(String sortBy, int from, int size) {
+        return PageRequest.of(from > 0 ? from / size : 0, size, Sort.by(sortBy).ascending());
+    }
 }
 
