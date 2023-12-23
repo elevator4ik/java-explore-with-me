@@ -153,4 +153,27 @@ public class EventMapper {
                 .views(event.getView())
                 .build();
     }
+
+
+    public static EventShortDto toEventShortDto(Event event, Long commentCount) { //добавил
+        return EventShortDto.builder()
+                .annotation(event.getAnnotation())
+                .category(CategoryMapper.toCategoryDto(event.getCategory()))
+                .confirmedRequests(event.getConfirmedRequests())
+                .eventDate(event.getEventDate().format(FORMATTER))
+                .id(event.getId())
+                .initiator(UserMapper.toUserShortDto(event.getInitiator()))
+                .paid(event.getPaid())
+                .title(event.getTitle())
+                .views(event.getView())
+                .commentCount(commentCount)
+                .build();
+    }
+
+    public EventCommentDto toEventComment(Event event) {
+        return EventCommentDto.builder()
+                .id(event.getId())
+                .title(event.getTitle())
+                .build();
+    }
 }
