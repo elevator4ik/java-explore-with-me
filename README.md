@@ -34,3 +34,6 @@ Java 11+, REST API, Spring Boot, Maven, Docker, PostgreSQL, JPA, Hibernate, Lomb
 ## Спецификация Swagger для API:
 [Основной сервис](https://github.com/elevator4ik/java-explore-with-me/blob/main/ewm-main-service-spec.json)  
 [Сервис статистики](https://github.com/elevator4ik/java-explore-with-me/blob/main/ewm-stats-service-spec.json)
+
+## Пример использования
+Ознакомиться с примерами использования можно в [этой коллекции тестов Postman](https://github.com/yandex-praktikum/java-explore-with-me/tree/main_svc/postman)
